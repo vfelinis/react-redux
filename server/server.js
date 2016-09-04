@@ -1,12 +1,18 @@
 var express = require('express');
 var path = require('path');
+var Repository = require('../models/Repository');
 
 var app = express();
+var repository = new Repository();
 
 app.use(express.static('./dist'));
 
-app.use('/', function(req, res){
+app.get('/', function(req, res){
 	res.sendFile(path.resolve('client/index.html'));
+});
+
+app.get('/getalldocs', function(req, res) {
+	res.json(repository.getAllDocs());
 });
 
 var port = 3000;
