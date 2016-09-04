@@ -18,17 +18,59 @@ export default class GetAllDocs extends React.Component{
 			}
 		});
 	}
+	update(docId){
+		console.log(docId);
+	}
+	remove(docId){
+		var self = this;
+		$.ajax({
+			url: '/delete/'+docId,
+			type: 'DELETE',
+			success: function(data){
+				self.setState({
+					documents: data
+				});
+			}
+		});
+	}
 
 	render(){
 		return (
 			<div>
-				<ul>
-					{
-						this.state.documents.map((doc) => {
-							return <li key={doc.id}>{doc.text}</li>
-						})
-					}
-				</ul>
+				<table className="table table-striped">
+					<thead>
+						<tr>
+							<th>Файл</th>
+							<th>Описание</th>
+							<th>Дата</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+							{
+								this.state.documents.map((doc) => {
+									return (
+										<tr key={doc.id}>
+											<td>{doc.file}</td>
+											<td>{doc.text}</td>
+											<td>{doc.date}</td>
+											<td>
+												<button onClick={this.update.bind(this, doc.id)} className="btn btn-xs btn-primary">
+								                    Изменить
+								                </button>
+											</td>
+											<td>
+												<button onClick={this.remove.bind(this, doc.id)} className="btn btn-xs btn-primary">
+								                    Удалить
+								                </button>
+											</td>
+										</tr>
+									)
+								})
+							}
+					</tbody>
+				</table>
 			</div>
 		)
 	}

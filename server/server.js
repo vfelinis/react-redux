@@ -15,6 +15,12 @@ app.get('/getalldocs', function(req, res) {
 	res.json(repository.getAllDocs());
 });
 
+app.delete('/delete/:id', function(req, res) {
+	var docId = req.params.id;
+	repository.removeDoc(docId);
+	res.json(repository.getAllDocs());
+});
+
 var port = 3000;
 
 app.listen(port, function(error){

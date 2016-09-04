@@ -21497,7 +21497,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					null,
+					{ className: 'container' },
 					_react2.default.createElement(
 						'h1',
 						null,
@@ -21565,21 +21565,103 @@
 				});
 			}
 		}, {
+			key: 'update',
+			value: function update(docId) {
+				console.log(docId);
+			}
+		}, {
+			key: 'remove',
+			value: function remove(docId) {
+				var self = this;
+				$.ajax({
+					url: '/delete/' + docId,
+					type: 'DELETE',
+					success: function success(data) {
+						self.setState({
+							documents: data
+						});
+					}
+				});
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+				var _this2 = this;
+
 				return _react2.default.createElement(
 					'div',
 					null,
 					_react2.default.createElement(
-						'ul',
-						null,
-						this.state.documents.map(function (doc) {
-							return _react2.default.createElement(
-								'li',
-								{ key: doc.id },
-								doc.text
-							);
-						})
+						'table',
+						{ className: 'table table-striped' },
+						_react2.default.createElement(
+							'thead',
+							null,
+							_react2.default.createElement(
+								'tr',
+								null,
+								_react2.default.createElement(
+									'th',
+									null,
+									'Файл'
+								),
+								_react2.default.createElement(
+									'th',
+									null,
+									'Описание'
+								),
+								_react2.default.createElement(
+									'th',
+									null,
+									'Дата'
+								),
+								_react2.default.createElement('th', null),
+								_react2.default.createElement('th', null)
+							)
+						),
+						_react2.default.createElement(
+							'tbody',
+							null,
+							this.state.documents.map(function (doc) {
+								return _react2.default.createElement(
+									'tr',
+									{ key: doc.id },
+									_react2.default.createElement(
+										'td',
+										null,
+										doc.file
+									),
+									_react2.default.createElement(
+										'td',
+										null,
+										doc.text
+									),
+									_react2.default.createElement(
+										'td',
+										null,
+										doc.date
+									),
+									_react2.default.createElement(
+										'td',
+										null,
+										_react2.default.createElement(
+											'button',
+											{ onClick: _this2.update.bind(_this2, doc.id), className: 'btn btn-xs btn-primary' },
+											'Изменить'
+										)
+									),
+									_react2.default.createElement(
+										'td',
+										null,
+										_react2.default.createElement(
+											'button',
+											{ onClick: _this2.remove.bind(_this2, doc.id), className: 'btn btn-xs btn-primary' },
+											'Удалить'
+										)
+									)
+								);
+							})
+						)
 					)
 				);
 			}

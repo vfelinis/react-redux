@@ -4,7 +4,7 @@ import GetAllDocs from './GetAllDocs'
 class App extends React.Component{
 	render(){
 		return (
-			<div>
+			<div className="container">
 				<h1>Ваши документы</h1>
 				<GetAllDocs/>
 			</div>
