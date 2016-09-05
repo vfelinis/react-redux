@@ -21475,6 +21475,10 @@
 
 	var _GetAllDocs2 = _interopRequireDefault(_GetAllDocs);
 
+	var _AddDoc = __webpack_require__(175);
+
+	var _AddDoc2 = _interopRequireDefault(_AddDoc);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21489,21 +21493,28 @@
 		function App() {
 			_classCallCheck(this, App);
 
-			return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+
+			_this.state = {
+				showAddDoc: false
+			};
+			return _this;
 		}
 
 		_createClass(App, [{
+			key: 'handleShowAddDoc',
+			value: function handleShowAddDoc() {
+				this.setState({
+					showAddDoc: !this.state.showAddDoc
+				});
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
 					{ className: 'container' },
-					_react2.default.createElement(
-						'h1',
-						null,
-						'Ваши документы'
-					),
-					_react2.default.createElement(_GetAllDocs2.default, null)
+					this.state.showAddDoc ? _react2.default.createElement(_AddDoc2.default, { handleShowAddDoc: this.handleShowAddDoc.bind(this) }) : _react2.default.createElement(_GetAllDocs2.default, { handleShowAddDoc: this.handleShowAddDoc.bind(this) })
 				);
 			}
 		}]);
@@ -21592,6 +21603,16 @@
 					'div',
 					null,
 					_react2.default.createElement(
+						'h1',
+						null,
+						'Ваши документы'
+					),
+					_react2.default.createElement(
+						'button',
+						{ onClick: this.props.handleShowAddDoc, className: 'btn btn-lg btn-default' },
+						'Создать новый документ'
+					),
+					_react2.default.createElement(
 						'table',
 						{ className: 'table table-striped' },
 						_react2.default.createElement(
@@ -21671,6 +21692,113 @@
 	}(_react2.default.Component);
 
 	exports.default = GetAllDocs;
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AddDoc = function (_React$Component) {
+		_inherits(AddDoc, _React$Component);
+
+		function AddDoc() {
+			_classCallCheck(this, AddDoc);
+
+			return _possibleConstructorReturn(this, (AddDoc.__proto__ || Object.getPrototypeOf(AddDoc)).apply(this, arguments));
+		}
+
+		_createClass(AddDoc, [{
+			key: 'handleCreateDoc',
+			value: function handleCreateDoc(e) {
+				e.preventDefault();
+				var formFile = _reactDom2.default.findDOMNode(this.refs.file).value;
+				var formText = _reactDom2.default.findDOMNode(this.refs.text).value;
+				var formDate = _reactDom2.default.findDOMNode(this.refs.date).value;
+				var self = this;
+				$.ajax({
+					url: '/createdoc',
+					type: 'POST',
+					data: {
+						file: formFile,
+						text: formText,
+						date: formDate
+					},
+					success: function success(data) {
+						self.props.handleShowAddDoc();
+					}
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'container' },
+					_react2.default.createElement(
+						'h1',
+						null,
+						'Новый документ'
+					),
+					_react2.default.createElement(
+						'form',
+						null,
+						_react2.default.createElement('input', {
+							type: 'text',
+							placeholder: 'Укажите файл',
+							ref: 'file'
+						}),
+						_react2.default.createElement('input', {
+							type: 'text',
+							placeholder: 'Укажите описание',
+							ref: 'text'
+						}),
+						_react2.default.createElement('input', {
+							type: 'date',
+							placeholder: 'Укажите дату',
+							ref: 'date'
+						}),
+						_react2.default.createElement(
+							'button',
+							{ onClick: this.handleCreateDoc.bind(this), className: 'btn btn-default' },
+							'Создать'
+						)
+					),
+					_react2.default.createElement(
+						'button',
+						{ onClick: this.props.handleShowAddDoc, className: 'btn btn-default' },
+						'Отменить'
+					)
+				);
+			}
+		}]);
+
+		return AddDoc;
+	}(_react2.default.Component);
+
+	exports.default = AddDoc;
 
 /***/ }
 /******/ ]);
