@@ -21471,11 +21471,11 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _GetAllDocs = __webpack_require__(174);
+	var _AllDocs = __webpack_require__(174);
 
-	var _GetAllDocs2 = _interopRequireDefault(_GetAllDocs);
+	var _AllDocs2 = _interopRequireDefault(_AllDocs);
 
-	var _AddDoc = __webpack_require__(175);
+	var _AddDoc = __webpack_require__(177);
 
 	var _AddDoc2 = _interopRequireDefault(_AddDoc);
 
@@ -21514,7 +21514,7 @@
 				return _react2.default.createElement(
 					'div',
 					{ className: 'container' },
-					this.state.showAddDoc ? _react2.default.createElement(_AddDoc2.default, { handleShowAddDoc: this.handleShowAddDoc.bind(this) }) : _react2.default.createElement(_GetAllDocs2.default, { handleShowAddDoc: this.handleShowAddDoc.bind(this) })
+					this.state.showAddDoc ? _react2.default.createElement(_AddDoc2.default, { handleShowAddDoc: this.handleShowAddDoc.bind(this) }) : _react2.default.createElement(_AllDocs2.default, { handleShowAddDoc: this.handleShowAddDoc.bind(this) })
 				);
 			}
 		}]);
@@ -21540,6 +21540,14 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _GetDocs = __webpack_require__(175);
+
+	var _GetDocs2 = _interopRequireDefault(_GetDocs);
+
+	var _UpdateDoc = __webpack_require__(176);
+
+	var _UpdateDoc2 = _interopRequireDefault(_UpdateDoc);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21548,13 +21556,76 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var GetAllDocs = function (_React$Component) {
-		_inherits(GetAllDocs, _React$Component);
+	var AllDocs = function (_React$Component) {
+		_inherits(AllDocs, _React$Component);
 
-		function GetAllDocs() {
-			_classCallCheck(this, GetAllDocs);
+		function AllDocs() {
+			_classCallCheck(this, AllDocs);
 
-			var _this = _possibleConstructorReturn(this, (GetAllDocs.__proto__ || Object.getPrototypeOf(GetAllDocs)).call(this));
+			var _this = _possibleConstructorReturn(this, (AllDocs.__proto__ || Object.getPrototypeOf(AllDocs)).call(this));
+
+			_this.state = {
+				showUpdateDoc: false,
+				document: {}
+			};
+			return _this;
+		}
+
+		_createClass(AllDocs, [{
+			key: 'handleShowUpdateDoc',
+			value: function handleShowUpdateDoc(doc) {
+				this.setState({
+					showUpdateDoc: !this.state.showUpdateDoc,
+					document: doc ? doc : {}
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					this.state.showUpdateDoc ? _react2.default.createElement(_UpdateDoc2.default, { document: this.state.document, handleShowUpdateDoc: this.handleShowUpdateDoc.bind(this) }) : _react2.default.createElement(_GetDocs2.default, { handleShowAddDoc: this.props.handleShowAddDoc, handleShowUpdateDoc: this.handleShowUpdateDoc.bind(this) })
+				);
+			}
+		}]);
+
+		return AllDocs;
+	}(_react2.default.Component);
+
+	exports.default = AllDocs;
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var GetDocs = function (_React$Component) {
+		_inherits(GetDocs, _React$Component);
+
+		function GetDocs() {
+			_classCallCheck(this, GetDocs);
+
+			var _this = _possibleConstructorReturn(this, (GetDocs.__proto__ || Object.getPrototypeOf(GetDocs)).call(this));
 
 			_this.state = {
 				documents: []
@@ -21562,7 +21633,7 @@
 			return _this;
 		}
 
-		_createClass(GetAllDocs, [{
+		_createClass(GetDocs, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 				var self = this;
@@ -21577,8 +21648,8 @@
 			}
 		}, {
 			key: 'update',
-			value: function update(docId) {
-				console.log(docId);
+			value: function update(doc) {
+				this.props.handleShowUpdateDoc(doc);
 			}
 		}, {
 			key: 'remove',
@@ -21667,7 +21738,7 @@
 										null,
 										_react2.default.createElement(
 											'button',
-											{ onClick: _this2.update.bind(_this2, doc.id), className: 'btn btn-xs btn-primary' },
+											{ onClick: _this2.update.bind(_this2, doc), className: 'btn btn-xs btn-primary' },
 											'Изменить'
 										)
 									),
@@ -21688,13 +21759,93 @@
 			}
 		}]);
 
-		return GetAllDocs;
+		return GetDocs;
 	}(_react2.default.Component);
 
-	exports.default = GetAllDocs;
+	exports.default = GetDocs;
 
 /***/ },
-/* 175 */
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var UpdateDoc = function (_React$Component) {
+		_inherits(UpdateDoc, _React$Component);
+
+		function UpdateDoc() {
+			_classCallCheck(this, UpdateDoc);
+
+			return _possibleConstructorReturn(this, (UpdateDoc.__proto__ || Object.getPrototypeOf(UpdateDoc)).apply(this, arguments));
+		}
+
+		_createClass(UpdateDoc, [{
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'h1',
+						null,
+						'Изменение документа'
+					),
+					_react2.default.createElement(
+						'form',
+						null,
+						_react2.default.createElement('input', {
+							type: 'text',
+							placeholder: 'Укажите файл',
+							ref: 'file',
+							value: this.props.document.file
+						}),
+						_react2.default.createElement('input', {
+							type: 'text',
+							placeholder: 'Укажите описание',
+							ref: 'text',
+							value: this.props.document.text
+						}),
+						_react2.default.createElement('input', {
+							type: 'date',
+							placeholder: 'Укажите дату',
+							ref: 'date',
+							value: this.props.document.date
+						})
+					),
+					_react2.default.createElement(
+						'button',
+						{ onClick: this.props.handleShowUpdateDoc, className: 'btn btn-default' },
+						'Отменить'
+					)
+				);
+			}
+		}]);
+
+		return UpdateDoc;
+	}(_react2.default.Component);
+
+	exports.default = UpdateDoc;
+
+/***/ },
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21756,7 +21907,7 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'div',
-					{ className: 'container' },
+					null,
 					_react2.default.createElement(
 						'h1',
 						null,

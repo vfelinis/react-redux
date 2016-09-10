@@ -1,5 +1,5 @@
 import React from 'react'
-import GetAllDocs from './GetAllDocs'
+import AllDocs from './AllDocs'
 import AddDoc from './AddDoc'
 
 class App extends React.Component{
@@ -18,7 +18,7 @@ class App extends React.Component{
 		return (
 			<div className="container">
 				{
-					this.state.showAddDoc ? <AddDoc handleShowAddDoc={this.handleShowAddDoc.bind(this)}/> : <GetAllDocs handleShowAddDoc={this.handleShowAddDoc.bind(this)}/>
+					this.state.showAddDoc ? <AddDoc handleShowAddDoc={this.handleShowAddDoc.bind(this)}/> : <AllDocs handleShowAddDoc={this.handleShowAddDoc.bind(this)}/>
 				}			
 			</div>
 		)

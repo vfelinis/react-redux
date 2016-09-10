@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class GetAllDocs extends React.Component{
+export default class GetDocs extends React.Component{
 	constructor(){
 		super();
 		this.state = {
@@ -18,8 +18,8 @@ export default class GetAllDocs extends React.Component{
 			}
 		});
 	}
-	update(docId){
-		console.log(docId);
+	update(doc){
+		this.props.handleShowUpdateDoc(doc);
 	}
 	remove(docId){
 		var self = this;
@@ -58,7 +58,7 @@ export default class GetAllDocs extends React.Component{
 											<td>{doc.text}</td>
 											<td>{doc.date}</td>
 											<td>
-												<button onClick={this.update.bind(this, doc.id)} className="btn btn-xs btn-primary">
+												<button onClick={this.update.bind(this, doc)} className="btn btn-xs btn-primary">
 								                    Изменить
 								                </button>
 											</td>
