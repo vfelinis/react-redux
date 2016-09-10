@@ -8,6 +8,7 @@ export default class GetDocs extends React.Component{
 		};
 	}
 	componentDidMount(){
+		console.log("tra-ta-ta");
 		var self = this;
 		$.ajax({
 			url: '/getalldocs',

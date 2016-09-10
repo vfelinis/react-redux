@@ -21636,6 +21636,7 @@
 		_createClass(GetDocs, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				console.log("tra-ta-ta");
 				var self = this;
 				$.ajax({
 					url: '/getalldocs',
@@ -21780,6 +21781,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21798,6 +21803,28 @@
 		}
 
 		_createClass(UpdateDoc, [{
+			key: 'handleUpdateDoc',
+			value: function handleUpdateDoc(e) {
+				e.preventDefault();
+				var doc = {
+					id: this.props.document.id,
+					file: _reactDom2.default.findDOMNode(this.refs.file).value,
+					text: _reactDom2.default.findDOMNode(this.refs.text).value,
+					date: _reactDom2.default.findDOMNode(this.refs.date).value,
+					user: '1'
+				};
+
+				var self = this;
+				$.ajax({
+					url: '/updatedoc',
+					type: 'PUT',
+					data: doc,
+					success: function success(data) {
+						self.props.handleShowUpdateDoc();
+					}
+				});
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -21815,20 +21842,25 @@
 							type: 'text',
 							placeholder: 'Укажите файл',
 							ref: 'file',
-							value: this.props.document.file
+							defaultValue: this.props.document.file
 						}),
 						_react2.default.createElement('input', {
 							type: 'text',
 							placeholder: 'Укажите описание',
 							ref: 'text',
-							value: this.props.document.text
+							defaultValue: this.props.document.text
 						}),
 						_react2.default.createElement('input', {
 							type: 'date',
 							placeholder: 'Укажите дату',
 							ref: 'date',
-							value: this.props.document.date
-						})
+							defaultValue: this.props.document.date
+						}),
+						_react2.default.createElement(
+							'button',
+							{ onClick: this.handleUpdateDoc.bind(this), className: 'btn btn-default' },
+							'Сохранить'
+						)
 					),
 					_react2.default.createElement(
 						'button',

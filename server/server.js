@@ -42,6 +42,13 @@ app.post('/createdoc', function(req, res) {
 	res.sendStatus(200);
 });
 
+app.put('/updatedoc', function(req, res) {
+	if (!req.body) {return res.sendStatus(400)}
+	var doc = req.body;
+	repository.updateDoc(doc);
+	res.sendStatus(200);
+});
+
 var port = 3000;
 
 app.listen(port, function(error){
