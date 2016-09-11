@@ -21656,15 +21656,17 @@
 			key: 'remove',
 			value: function remove(docId) {
 				var self = this;
-				$.ajax({
-					url: '/delete/' + docId,
-					type: 'DELETE',
-					success: function success(data) {
-						self.setState({
-							documents: data
-						});
-					}
-				});
+				if (confirm("Вы подтверждаете удаление?")) {
+					$.ajax({
+						url: '/delete/' + docId,
+						type: 'DELETE',
+						success: function success(data) {
+							self.setState({
+								documents: data
+							});
+						}
+					});
+				}
 			}
 		}, {
 			key: 'render',
@@ -21825,6 +21827,12 @@
 				});
 			}
 		}, {
+			key: 'handleCancel',
+			value: function handleCancel(e) {
+				e.preventDefault();
+				this.props.handleShowUpdateDoc();
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -21837,35 +21845,86 @@
 					),
 					_react2.default.createElement(
 						'form',
-						null,
-						_react2.default.createElement('input', {
-							type: 'text',
-							placeholder: 'Укажите файл',
-							ref: 'file',
-							defaultValue: this.props.document.file
-						}),
-						_react2.default.createElement('input', {
-							type: 'text',
-							placeholder: 'Укажите описание',
-							ref: 'text',
-							defaultValue: this.props.document.text
-						}),
-						_react2.default.createElement('input', {
-							type: 'date',
-							placeholder: 'Укажите дату',
-							ref: 'date',
-							defaultValue: this.props.document.date
-						}),
+						{ className: 'form-horizontal' },
 						_react2.default.createElement(
-							'button',
-							{ onClick: this.handleUpdateDoc.bind(this), className: 'btn btn-default' },
-							'Сохранить'
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'label',
+								{ className: 'col-sm-2 control-label' },
+								'Файл'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-10' },
+								_react2.default.createElement('input', {
+									type: 'text',
+									ref: 'file',
+									defaultValue: this.props.document.file,
+									className: 'form-control'
+								})
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'label',
+								{ className: 'col-sm-2 control-label' },
+								'Описание'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-10' },
+								_react2.default.createElement('input', {
+									type: 'text',
+									ref: 'text',
+									defaultValue: this.props.document.text,
+									className: 'form-control'
+								})
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'label',
+								{ className: 'col-sm-2 control-label' },
+								'Дата'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-3' },
+								_react2.default.createElement('input', {
+									type: 'date',
+									ref: 'date',
+									defaultValue: this.props.document.date,
+									className: 'form-control'
+								})
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-offset-2 col-sm-2' },
+								_react2.default.createElement(
+									'button',
+									{ onClick: this.handleUpdateDoc.bind(this), className: 'btn btn-default' },
+									'Сохранить'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-2' },
+								_react2.default.createElement(
+									'button',
+									{ onClick: this.handleCancel.bind(this), className: 'btn btn-default' },
+									'Отменить'
+								)
+							)
 						)
-					),
-					_react2.default.createElement(
-						'button',
-						{ onClick: this.props.handleShowUpdateDoc, className: 'btn btn-default' },
-						'Отменить'
 					)
 				);
 			}
@@ -21935,6 +21994,12 @@
 				});
 			}
 		}, {
+			key: 'handleCancel',
+			value: function handleCancel(e) {
+				e.preventDefault();
+				this.props.handleShowAddDoc();
+			}
+		}, {
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
@@ -21947,32 +22012,86 @@
 					),
 					_react2.default.createElement(
 						'form',
-						null,
-						_react2.default.createElement('input', {
-							type: 'text',
-							placeholder: 'Укажите файл',
-							ref: 'file'
-						}),
-						_react2.default.createElement('input', {
-							type: 'text',
-							placeholder: 'Укажите описание',
-							ref: 'text'
-						}),
-						_react2.default.createElement('input', {
-							type: 'date',
-							placeholder: 'Укажите дату',
-							ref: 'date'
-						}),
+						{ className: 'form-horizontal' },
 						_react2.default.createElement(
-							'button',
-							{ onClick: this.handleCreateDoc.bind(this), className: 'btn btn-default' },
-							'Создать'
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'label',
+								{ className: 'col-sm-2 control-label' },
+								'Файл'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-10' },
+								_react2.default.createElement('input', {
+									type: 'text',
+									placeholder: 'Укажите файл',
+									ref: 'file',
+									className: 'form-control'
+								})
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'label',
+								{ className: 'col-sm-2 control-label' },
+								'Описание'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-10' },
+								_react2.default.createElement('input', {
+									type: 'text',
+									placeholder: 'Укажите описание',
+									ref: 'text',
+									className: 'form-control'
+								})
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'label',
+								{ className: 'col-sm-2 control-label' },
+								'Дата'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-3' },
+								_react2.default.createElement('input', {
+									type: 'date',
+									placeholder: 'Укажите дату',
+									ref: 'date',
+									className: 'form-control'
+								})
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-offset-2 col-sm-2' },
+								_react2.default.createElement(
+									'button',
+									{ onClick: this.handleCreateDoc.bind(this), className: 'btn btn-default' },
+									'Создать'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-2' },
+								_react2.default.createElement(
+									'button',
+									{ onClick: this.handleCancel.bind(this), className: 'btn btn-default' },
+									'Отменить'
+								)
+							)
 						)
-					),
-					_react2.default.createElement(
-						'button',
-						{ onClick: this.props.handleShowAddDoc, className: 'btn btn-default' },
-						'Отменить'
 					)
 				);
 			}

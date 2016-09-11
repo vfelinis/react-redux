@@ -8,7 +8,6 @@ export default class GetDocs extends React.Component{
 		};
 	}
 	componentDidMount(){
-		console.log("tra-ta-ta");
 		var self = this;
 		$.ajax({
 			url: '/getalldocs',
@@ -24,15 +23,17 @@ export default class GetDocs extends React.Component{
 	}
 	remove(docId){
 		var self = this;
-		$.ajax({
-			url: '/delete/'+docId,
-			type: 'DELETE',
-			success: function(data){
-				self.setState({
-					documents: data
-				});
-			}
-		});
+		if (confirm("Вы подтверждаете удаление?")){
+			$.ajax({
+				url: '/delete/'+docId,
+				type: 'DELETE',
+				success: function(data){
+					self.setState({
+						documents: data
+					});
+				}
+			});
+		}
 	}
 
 	render(){

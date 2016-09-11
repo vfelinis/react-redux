@@ -21,29 +21,57 @@ class AddDoc extends React.Component{
 			}
 		});
 	}
+	handleCancel(e){
+		e.preventDefault();
+		this.props.handleShowAddDoc();
+	}
 	render(){
 		return (
 			<div>
 				<h1>Новый документ</h1>
-				<form>
-					<input
-					  type='text'
-					  placeholder='Укажите файл'
-					  ref='file'
-					/>
-					<input
-					  type='text'
-					  placeholder='Укажите описание'
-					  ref='text'
-					/>
-					<input
-					  type='date'
-					  placeholder='Укажите дату'
-					  ref='date'
-					/>
-					<button onClick={this.handleCreateDoc.bind(this)} className="btn btn-default">Создать</button>
+				<form className="form-horizontal">
+					<div className="form-group">
+						<label className="col-sm-2 control-label">Файл</label>
+						<div className="col-sm-10">
+							<input
+							  type='text'
+							  placeholder='Укажите файл'
+							  ref='file'
+							  className="form-control"
+							/>
+						</div>
+					</div>
+					<div className="form-group">
+						<label className="col-sm-2 control-label">Описание</label>
+						<div className="col-sm-10">
+							<input
+							  type='text'
+							  placeholder='Укажите описание'
+							  ref='text'
+							  className="form-control"
+							/>
+						</div>
+					</div>
+					<div className="form-group">
+						<label className="col-sm-2 control-label">Дата</label>
+						<div className="col-sm-3">
+							<input
+							  type='date'
+							  placeholder='Укажите дату'
+							  ref='date'
+							  className="form-control"
+							/>
+						</div>
+					</div>
+					<div className="form-group">
+						<div className="col-sm-offset-2 col-sm-2">
+							<button onClick={this.handleCreateDoc.bind(this)} className="btn btn-default">Создать</button>
+						</div>
+						<div className="col-sm-2">
+							<button onClick={this.handleCancel.bind(this)} className="btn btn-default">Отменить</button>
+						</div>
+					</div>
 				</form>
-				<button onClick={this.props.handleShowAddDoc} className="btn btn-default">Отменить</button>
 			</div>
 		)
 	}
