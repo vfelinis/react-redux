@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class GetDocs extends React.Component{
+class GetDocs extends React.Component{
 	constructor(){
 		super();
 		this.state = {
@@ -10,16 +10,13 @@ export default class GetDocs extends React.Component{
 	componentDidMount(){
 		var self = this;
 		$.ajax({
-			url: '/getalldocs',
+			url: '/getdocs',
 			success: function(data){
 				self.setState({
 					documents: data
 				});
 			}
 		});
-	}
-	update(doc){
-		this.props.handleShowUpdateDoc(doc);
 	}
 	remove(docId){
 		var self = this;
@@ -29,18 +26,22 @@ export default class GetDocs extends React.Component{
 				type: 'DELETE',
 				success: function(data){
 					self.setState({
-						documents: data
+						documents: self.state.documents.filter(function(doc) {
+								       return doc.id != docId;
+								   })
 					});
 				}
 			});
 		}
 	}
-
+	update(doc){
+		this.props.handleShowUpdateDoc(doc);
+	}
 	render(){
 		return (
 			<div>
 				<h1>Ваши документы</h1>
-				<button onClick={this.props.handleShowAddDoc} className="btn btn-lg btn-default">Создать новый документ</button>
+				<button onClick={this.props.handleShowCreateDoc} className="btn btn-lg btn-default">Создать новый документ</button>
 				<table className="table table-striped">
 					<thead>
 						<tr>
@@ -52,30 +53,32 @@ export default class GetDocs extends React.Component{
 						</tr>
 					</thead>
 					<tbody>
-							{
-								this.state.documents.map((doc) => {
-									return (
-										<tr key={doc.id}>
-											<td>{doc.file}</td>
-											<td>{doc.text}</td>
-											<td>{doc.date}</td>
-											<td>
-												<button onClick={this.update.bind(this, doc)} className="btn btn-xs btn-primary">
-								                    Изменить
-								                </button>
-											</td>
-											<td>
-												<button onClick={this.remove.bind(this, doc.id)} className="btn btn-xs btn-primary">
-								                    Удалить
-								                </button>
-											</td>
-										</tr>
-									)
-								})
-							}
+					{
+						this.state.documents.map((doc) => {
+							return (
+								<tr key={doc.id}>
+									<td>{doc.file}</td>
+									<td>{doc.text}</td>
+									<td>{doc.date}</td>
+									<td>
+										<button onClick={this.update.bind(this, doc)} className="btn btn-xs btn-primary">
+						                    Изменить
+						                </button>
+									</td>
+									<td>
+										<button onClick={this.remove.bind(this, doc.id)} className="btn btn-xs btn-primary">
+						                    Удалить
+						                </button>
+									</td>
+								</tr>
+							)
+						})
+					}
 					</tbody>
 				</table>
 			</div>
 		)
 	}
 }
+
+export default GetDocs

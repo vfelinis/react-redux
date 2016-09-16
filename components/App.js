@@ -1,25 +1,27 @@
 import React from 'react'
-import AllDocs from './AllDocs'
-import AddDoc from './AddDoc'
+import CreateDoc from './CreateDoc'
+import Documents from './Documents'
 
 class App extends React.Component{
 	constructor(){
 		super();
 		this.state = {
-			showAddDoc: false
+			showCreateDoc: false
 		};
 	}
-	handleShowAddDoc(){
+	handleShowCreateDoc(){
 		this.setState({
-			showAddDoc: !this.state.showAddDoc
+			showCreateDoc: !this.state.showCreateDoc
 		});
 	}
 	render(){
 		return (
 			<div className="container">
 				{
-					this.state.showAddDoc ? <AddDoc handleShowAddDoc={this.handleShowAddDoc.bind(this)}/> : <AllDocs handleShowAddDoc={this.handleShowAddDoc.bind(this)}/>
-				}			
+					this.state.showCreateDoc ?
+						<CreateDoc handleShowCreateDoc={this.handleShowCreateDoc.bind(this)}/> :
+							<Documents handleShowCreateDoc={this.handleShowCreateDoc.bind(this)}/>
+				}
 			</div>
 		)
 	}

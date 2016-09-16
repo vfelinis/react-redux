@@ -6,10 +6,10 @@ class UpdateDoc extends React.Component{
 		e.preventDefault();
 		var doc = {
 			id: this.props.document.id,
-			file: ReactDom.findDOMNode(this.refs.file).value,
+			file: this.props.document.file,
 			text: ReactDom.findDOMNode(this.refs.text).value,
 			date: ReactDom.findDOMNode(this.refs.date).value,
-			user: '1'
+			user: this.props.document.user
 		};
   		var self = this;
 		$.ajax({
@@ -21,26 +21,11 @@ class UpdateDoc extends React.Component{
 			}
 		});
 	}
-	handleCancel(e){
-		e.preventDefault();
-		this.props.handleShowUpdateDoc();
-	}
 	render(){
 		return (
 			<div>
 				<h1>Изменение документа</h1>
 				<form className="form-horizontal">
-					<div className="form-group">
-						<label className="col-sm-2 control-label">Файл</label>
-						<div className="col-sm-10">
-							<input
-							  type='text'
-							  ref='file'
-							  defaultValue={this.props.document.file}
-							  className="form-control"
-							/>
-						</div>
-					</div>
 					<div className="form-group">
 						<label className="col-sm-2 control-label">Описание</label>
 						<div className="col-sm-10">
@@ -67,11 +52,11 @@ class UpdateDoc extends React.Component{
 						<div className="col-sm-offset-2 col-sm-2">
 							<button onClick={this.handleUpdateDoc.bind(this)} className="btn btn-default">Сохранить</button>
 						</div>
-						<div className="col-sm-2">
-							<button onClick={this.handleCancel.bind(this)} className="btn btn-default">Отменить</button>
-						</div>
 					</div>
 				</form>
+				<button onClick={this.props.handleShowUpdateDoc} className="btn btn-default">
+					Отменить
+				</button>
 			</div>
 		)
 	}

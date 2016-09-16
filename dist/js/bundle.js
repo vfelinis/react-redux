@@ -21471,13 +21471,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _AllDocs = __webpack_require__(174);
+	var _CreateDoc = __webpack_require__(174);
 
-	var _AllDocs2 = _interopRequireDefault(_AllDocs);
+	var _CreateDoc2 = _interopRequireDefault(_CreateDoc);
 
-	var _AddDoc = __webpack_require__(177);
+	var _Documents = __webpack_require__(175);
 
-	var _AddDoc2 = _interopRequireDefault(_AddDoc);
+	var _Documents2 = _interopRequireDefault(_Documents);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21496,16 +21496,16 @@
 			var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
 			_this.state = {
-				showAddDoc: false
+				showCreateDoc: false
 			};
 			return _this;
 		}
 
 		_createClass(App, [{
-			key: 'handleShowAddDoc',
-			value: function handleShowAddDoc() {
+			key: 'handleShowCreateDoc',
+			value: function handleShowCreateDoc() {
 				this.setState({
-					showAddDoc: !this.state.showAddDoc
+					showCreateDoc: !this.state.showCreateDoc
 				});
 			}
 		}, {
@@ -21514,7 +21514,7 @@
 				return _react2.default.createElement(
 					'div',
 					{ className: 'container' },
-					this.state.showAddDoc ? _react2.default.createElement(_AddDoc2.default, { handleShowAddDoc: this.handleShowAddDoc.bind(this) }) : _react2.default.createElement(_AllDocs2.default, { handleShowAddDoc: this.handleShowAddDoc.bind(this) })
+					this.state.showCreateDoc ? _react2.default.createElement(_CreateDoc2.default, { handleShowCreateDoc: this.handleShowCreateDoc.bind(this) }) : _react2.default.createElement(_Documents2.default, { handleShowCreateDoc: this.handleShowCreateDoc.bind(this) })
 				);
 			}
 		}]);
@@ -21540,13 +21540,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _GetDocs = __webpack_require__(175);
+	var _reactDom = __webpack_require__(35);
 
-	var _GetDocs2 = _interopRequireDefault(_GetDocs);
-
-	var _UpdateDoc = __webpack_require__(176);
-
-	var _UpdateDoc2 = _interopRequireDefault(_UpdateDoc);
+	var _reactDom2 = _interopRequireDefault(_reactDom);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21556,27 +21552,35 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var AllDocs = function (_React$Component) {
-		_inherits(AllDocs, _React$Component);
+	var CreateDoc = function (_React$Component) {
+		_inherits(CreateDoc, _React$Component);
 
-		function AllDocs() {
-			_classCallCheck(this, AllDocs);
+		function CreateDoc() {
+			_classCallCheck(this, CreateDoc);
 
-			var _this = _possibleConstructorReturn(this, (AllDocs.__proto__ || Object.getPrototypeOf(AllDocs)).call(this));
-
-			_this.state = {
-				showUpdateDoc: false,
-				document: {}
-			};
-			return _this;
+			return _possibleConstructorReturn(this, (CreateDoc.__proto__ || Object.getPrototypeOf(CreateDoc)).apply(this, arguments));
 		}
 
-		_createClass(AllDocs, [{
-			key: 'handleShowUpdateDoc',
-			value: function handleShowUpdateDoc(doc) {
-				this.setState({
-					showUpdateDoc: !this.state.showUpdateDoc,
-					document: doc ? doc : {}
+		_createClass(CreateDoc, [{
+			key: 'handleCreateDoc',
+			value: function handleCreateDoc(e) {
+				e.preventDefault();
+				var formFile = _reactDom2.default.findDOMNode(this.refs.file).value;
+				var formText = _reactDom2.default.findDOMNode(this.refs.text).value;
+				var formDate = _reactDom2.default.findDOMNode(this.refs.date).value;
+				var self = this;
+				$.ajax({
+					url: '/createdoc',
+					type: 'POST',
+					data: {
+						file: formFile,
+						text: formText,
+						date: formDate,
+						user: '1'
+					},
+					success: function success(data) {
+						self.props.handleShowCreateDoc();
+					}
 				});
 			}
 		}, {
@@ -21585,18 +21589,310 @@
 				return _react2.default.createElement(
 					'div',
 					null,
-					this.state.showUpdateDoc ? _react2.default.createElement(_UpdateDoc2.default, { document: this.state.document, handleShowUpdateDoc: this.handleShowUpdateDoc.bind(this) }) : _react2.default.createElement(_GetDocs2.default, { handleShowAddDoc: this.props.handleShowAddDoc, handleShowUpdateDoc: this.handleShowUpdateDoc.bind(this) })
+					_react2.default.createElement(
+						'h1',
+						null,
+						'Создание нового документа'
+					),
+					_react2.default.createElement(
+						'form',
+						{ className: 'form-horizontal' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'label',
+								{ className: 'col-sm-2 control-label' },
+								'Файл'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-10' },
+								_react2.default.createElement('input', {
+									type: 'text',
+									placeholder: 'Укажите файл',
+									ref: 'file',
+									className: 'form-control'
+								})
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'label',
+								{ className: 'col-sm-2 control-label' },
+								'Описание'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-10' },
+								_react2.default.createElement('input', {
+									type: 'text',
+									placeholder: 'Укажите описание',
+									ref: 'text',
+									className: 'form-control'
+								})
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'label',
+								{ className: 'col-sm-2 control-label' },
+								'Дата'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-3' },
+								_react2.default.createElement('input', {
+									type: 'date',
+									placeholder: 'Укажите дату',
+									ref: 'date',
+									className: 'form-control'
+								})
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-offset-2 col-sm-2' },
+								_react2.default.createElement(
+									'button',
+									{ onClick: this.handleCreateDoc.bind(this), className: 'btn btn-default' },
+									'Создать'
+								)
+							)
+						)
+					),
+					_react2.default.createElement(
+						'button',
+						{ onClick: this.props.handleShowCreateDoc, className: 'btn btn-default' },
+						'Отменить'
+					)
 				);
 			}
 		}]);
 
-		return AllDocs;
+		return CreateDoc;
 	}(_react2.default.Component);
 
-	exports.default = AllDocs;
+	exports.default = CreateDoc;
 
 /***/ },
 /* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _UpdateDoc = __webpack_require__(176);
+
+	var _UpdateDoc2 = _interopRequireDefault(_UpdateDoc);
+
+	var _GetDocs = __webpack_require__(177);
+
+	var _GetDocs2 = _interopRequireDefault(_GetDocs);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Documents = function (_React$Component) {
+		_inherits(Documents, _React$Component);
+
+		function Documents() {
+			_classCallCheck(this, Documents);
+
+			var _this = _possibleConstructorReturn(this, (Documents.__proto__ || Object.getPrototypeOf(Documents)).call(this));
+
+			_this.state = {
+				showUpdateDoc: false,
+				document: {}
+			};
+			return _this;
+		}
+
+		_createClass(Documents, [{
+			key: 'handleShowUpdateDoc',
+			value: function handleShowUpdateDoc(doc) {
+				this.setState({
+					showUpdateDoc: !this.state.showUpdateDoc,
+					document: doc
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					this.state.showUpdateDoc ? _react2.default.createElement(_UpdateDoc2.default, { document: this.state.document, handleShowUpdateDoc: this.handleShowUpdateDoc.bind(this) }) : _react2.default.createElement(_GetDocs2.default, { handleShowCreateDoc: this.props.handleShowCreateDoc, handleShowUpdateDoc: this.handleShowUpdateDoc.bind(this) })
+				);
+			}
+		}]);
+
+		return Documents;
+	}(_react2.default.Component);
+
+	exports.default = Documents;
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(35);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var UpdateDoc = function (_React$Component) {
+		_inherits(UpdateDoc, _React$Component);
+
+		function UpdateDoc() {
+			_classCallCheck(this, UpdateDoc);
+
+			return _possibleConstructorReturn(this, (UpdateDoc.__proto__ || Object.getPrototypeOf(UpdateDoc)).apply(this, arguments));
+		}
+
+		_createClass(UpdateDoc, [{
+			key: 'handleUpdateDoc',
+			value: function handleUpdateDoc(e) {
+				e.preventDefault();
+				var doc = {
+					id: this.props.document.id,
+					file: this.props.document.file,
+					text: _reactDom2.default.findDOMNode(this.refs.text).value,
+					date: _reactDom2.default.findDOMNode(this.refs.date).value,
+					user: this.props.document.user
+				};
+				var self = this;
+				$.ajax({
+					url: '/updatedoc',
+					type: 'PUT',
+					data: doc,
+					success: function success(data) {
+						self.props.handleShowUpdateDoc();
+					}
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement(
+						'h1',
+						null,
+						'Изменение документа'
+					),
+					_react2.default.createElement(
+						'form',
+						{ className: 'form-horizontal' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'label',
+								{ className: 'col-sm-2 control-label' },
+								'Описание'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-10' },
+								_react2.default.createElement('input', {
+									type: 'text',
+									ref: 'text',
+									defaultValue: this.props.document.text,
+									className: 'form-control'
+								})
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'label',
+								{ className: 'col-sm-2 control-label' },
+								'Дата'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-3' },
+								_react2.default.createElement('input', {
+									type: 'date',
+									ref: 'date',
+									defaultValue: this.props.document.date,
+									className: 'form-control'
+								})
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'form-group' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'col-sm-offset-2 col-sm-2' },
+								_react2.default.createElement(
+									'button',
+									{ onClick: this.handleUpdateDoc.bind(this), className: 'btn btn-default' },
+									'Сохранить'
+								)
+							)
+						)
+					),
+					_react2.default.createElement(
+						'button',
+						{ onClick: this.props.handleShowUpdateDoc, className: 'btn btn-default' },
+						'Отменить'
+					)
+				);
+			}
+		}]);
+
+		return UpdateDoc;
+	}(_react2.default.Component);
+
+	exports.default = UpdateDoc;
+
+/***/ },
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21636,21 +21932,15 @@
 		_createClass(GetDocs, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				console.log("tra-ta-ta");
 				var self = this;
 				$.ajax({
-					url: '/getalldocs',
+					url: '/getdocs',
 					success: function success(data) {
 						self.setState({
 							documents: data
 						});
 					}
 				});
-			}
-		}, {
-			key: 'update',
-			value: function update(doc) {
-				this.props.handleShowUpdateDoc(doc);
 			}
 		}, {
 			key: 'remove',
@@ -21662,11 +21952,18 @@
 						type: 'DELETE',
 						success: function success(data) {
 							self.setState({
-								documents: data
+								documents: self.state.documents.filter(function (doc) {
+									return doc.id != docId;
+								})
 							});
 						}
 					});
 				}
+			}
+		}, {
+			key: 'update',
+			value: function update(doc) {
+				this.props.handleShowUpdateDoc(doc);
 			}
 		}, {
 			key: 'render',
@@ -21683,7 +21980,7 @@
 					),
 					_react2.default.createElement(
 						'button',
-						{ onClick: this.props.handleShowAddDoc, className: 'btn btn-lg btn-default' },
+						{ onClick: this.props.handleShowCreateDoc, className: 'btn btn-lg btn-default' },
 						'Создать новый документ'
 					),
 					_react2.default.createElement(
@@ -21766,341 +22063,6 @@
 	}(_react2.default.Component);
 
 	exports.default = GetDocs;
-
-/***/ },
-/* 176 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(35);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var UpdateDoc = function (_React$Component) {
-		_inherits(UpdateDoc, _React$Component);
-
-		function UpdateDoc() {
-			_classCallCheck(this, UpdateDoc);
-
-			return _possibleConstructorReturn(this, (UpdateDoc.__proto__ || Object.getPrototypeOf(UpdateDoc)).apply(this, arguments));
-		}
-
-		_createClass(UpdateDoc, [{
-			key: 'handleUpdateDoc',
-			value: function handleUpdateDoc(e) {
-				e.preventDefault();
-				var doc = {
-					id: this.props.document.id,
-					file: _reactDom2.default.findDOMNode(this.refs.file).value,
-					text: _reactDom2.default.findDOMNode(this.refs.text).value,
-					date: _reactDom2.default.findDOMNode(this.refs.date).value,
-					user: '1'
-				};
-
-				var self = this;
-				$.ajax({
-					url: '/updatedoc',
-					type: 'PUT',
-					data: doc,
-					success: function success(data) {
-						self.props.handleShowUpdateDoc();
-					}
-				});
-			}
-		}, {
-			key: 'handleCancel',
-			value: function handleCancel(e) {
-				e.preventDefault();
-				this.props.handleShowUpdateDoc();
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(
-						'h1',
-						null,
-						'Изменение документа'
-					),
-					_react2.default.createElement(
-						'form',
-						{ className: 'form-horizontal' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'form-group' },
-							_react2.default.createElement(
-								'label',
-								{ className: 'col-sm-2 control-label' },
-								'Файл'
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-sm-10' },
-								_react2.default.createElement('input', {
-									type: 'text',
-									ref: 'file',
-									defaultValue: this.props.document.file,
-									className: 'form-control'
-								})
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'form-group' },
-							_react2.default.createElement(
-								'label',
-								{ className: 'col-sm-2 control-label' },
-								'Описание'
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-sm-10' },
-								_react2.default.createElement('input', {
-									type: 'text',
-									ref: 'text',
-									defaultValue: this.props.document.text,
-									className: 'form-control'
-								})
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'form-group' },
-							_react2.default.createElement(
-								'label',
-								{ className: 'col-sm-2 control-label' },
-								'Дата'
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-sm-3' },
-								_react2.default.createElement('input', {
-									type: 'date',
-									ref: 'date',
-									defaultValue: this.props.document.date,
-									className: 'form-control'
-								})
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'form-group' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-sm-offset-2 col-sm-2' },
-								_react2.default.createElement(
-									'button',
-									{ onClick: this.handleUpdateDoc.bind(this), className: 'btn btn-default' },
-									'Сохранить'
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-sm-2' },
-								_react2.default.createElement(
-									'button',
-									{ onClick: this.handleCancel.bind(this), className: 'btn btn-default' },
-									'Отменить'
-								)
-							)
-						)
-					)
-				);
-			}
-		}]);
-
-		return UpdateDoc;
-	}(_react2.default.Component);
-
-	exports.default = UpdateDoc;
-
-/***/ },
-/* 177 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(35);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var AddDoc = function (_React$Component) {
-		_inherits(AddDoc, _React$Component);
-
-		function AddDoc() {
-			_classCallCheck(this, AddDoc);
-
-			return _possibleConstructorReturn(this, (AddDoc.__proto__ || Object.getPrototypeOf(AddDoc)).apply(this, arguments));
-		}
-
-		_createClass(AddDoc, [{
-			key: 'handleCreateDoc',
-			value: function handleCreateDoc(e) {
-				e.preventDefault();
-				var formFile = _reactDom2.default.findDOMNode(this.refs.file).value;
-				var formText = _reactDom2.default.findDOMNode(this.refs.text).value;
-				var formDate = _reactDom2.default.findDOMNode(this.refs.date).value;
-				var self = this;
-				$.ajax({
-					url: '/createdoc',
-					type: 'POST',
-					data: {
-						file: formFile,
-						text: formText,
-						date: formDate
-					},
-					success: function success(data) {
-						self.props.handleShowAddDoc();
-					}
-				});
-			}
-		}, {
-			key: 'handleCancel',
-			value: function handleCancel(e) {
-				e.preventDefault();
-				this.props.handleShowAddDoc();
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(
-						'h1',
-						null,
-						'Новый документ'
-					),
-					_react2.default.createElement(
-						'form',
-						{ className: 'form-horizontal' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'form-group' },
-							_react2.default.createElement(
-								'label',
-								{ className: 'col-sm-2 control-label' },
-								'Файл'
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-sm-10' },
-								_react2.default.createElement('input', {
-									type: 'text',
-									placeholder: 'Укажите файл',
-									ref: 'file',
-									className: 'form-control'
-								})
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'form-group' },
-							_react2.default.createElement(
-								'label',
-								{ className: 'col-sm-2 control-label' },
-								'Описание'
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-sm-10' },
-								_react2.default.createElement('input', {
-									type: 'text',
-									placeholder: 'Укажите описание',
-									ref: 'text',
-									className: 'form-control'
-								})
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'form-group' },
-							_react2.default.createElement(
-								'label',
-								{ className: 'col-sm-2 control-label' },
-								'Дата'
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-sm-3' },
-								_react2.default.createElement('input', {
-									type: 'date',
-									placeholder: 'Укажите дату',
-									ref: 'date',
-									className: 'form-control'
-								})
-							)
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'form-group' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-sm-offset-2 col-sm-2' },
-								_react2.default.createElement(
-									'button',
-									{ onClick: this.handleCreateDoc.bind(this), className: 'btn btn-default' },
-									'Создать'
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'col-sm-2' },
-								_react2.default.createElement(
-									'button',
-									{ onClick: this.handleCancel.bind(this), className: 'btn btn-default' },
-									'Отменить'
-								)
-							)
-						)
-					)
-				);
-			}
-		}]);
-
-		return AddDoc;
-	}(_react2.default.Component);
-
-	exports.default = AddDoc;
 
 /***/ }
 /******/ ]);
